@@ -13,9 +13,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"/>
+        android:layout_width="394dp"
+        android:layout_height="602dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_marginBottom="49dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -30,7 +31,7 @@
             android:id="@+id/addMessageImageView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            ads:srcCompat="@drawable/ic_add_black_24dp"/>
+            ads:srcCompat="@drawable/ic_add_black_24dp" />
 
         <EditText
             android:id="@+id/messageEditText"
@@ -56,4 +57,5 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+
 </RelativeLayout>
