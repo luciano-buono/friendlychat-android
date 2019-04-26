@@ -11,4 +11,7 @@
     <item
         android:id="@+id/fresh_config_menu"
         android:title="fresh_config_menu" />
+    <item
+        android:id="@+id/subscribeButton"
+        android:title="subscribeButton" />
 </menu>

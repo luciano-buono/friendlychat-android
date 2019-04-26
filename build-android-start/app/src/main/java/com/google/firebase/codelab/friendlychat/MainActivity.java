@@ -65,6 +65,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -382,6 +383,23 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, SignInActivity.class));
                 finish();
                 return true;
+            case R.id.subscribeButton:
+                Log.d(TAG, "Subscribing to weather topic");
+                // [START subscribe_topics]
+                FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                String msg = getString(R.string.msg_subscribed);
+                                if (!task.isSuccessful()) {
+                                    msg = getString(R.string.msg_subscribe_failed);
+                                }
+                                Log.d(TAG, msg);
+                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            // [END subscribe_topics]
+
             case R.id.logTokenButton:
                 // Get token
                 // [START retrieve_current_token]
@@ -401,10 +419,17 @@ public class MainActivity extends AppCompatActivity
                                 String msg = getString(R.string.msg_token_fmt, token);
                                 Log.d(TAG, msg);
                                 Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                //Send the Token as a Message in the chat
+                                FriendlyMessage friendlyMessage = new
+                                        FriendlyMessage(msg,
+                                        mUsername,
+                                        mPhotoUrl,
+                                        null /* no image */);
+                                mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+                                        .push().setValue(friendlyMessage);
                             }
                         });
                 // [END retrieve_current_token]
-
 
             default:
                 return super.onOptionsItemSelected(item);
